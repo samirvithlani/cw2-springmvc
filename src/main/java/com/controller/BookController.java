@@ -1,5 +1,7 @@
 package com.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +35,15 @@ public class BookController {
 		} else {
 			System.out.println("book not added...con");
 		}
-		return null;
+		return "redirect:booklist";
+	}
+
+	@GetMapping("/booklist")
+	public String getBooks(Model model) {
+
+		
+		List<BookBean> books = bookDao.getAllBooks();
+		model.addAttribute("books",books);
+		return "booklist";
 	}
 }

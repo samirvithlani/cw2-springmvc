@@ -1,7 +1,12 @@
 package com.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.bean.BookBean;
@@ -13,8 +18,28 @@ public class BookDao {
 	JdbcTemplate jdbcTemplate;
 
 	public int addBook(BookBean bookBean) {
-		
-		return jdbcTemplate.update("insert into book(bname,bprice,bqty)values(?,?,?)",bookBean.getbName(),bookBean.getbPrice(),bookBean.getbQty());		
+
+		return jdbcTemplate.update("insert into book(bname,bprice,bqty)values(?,?,?)", bookBean.getbName(),
+				bookBean.getbPrice(), bookBean.getbQty());
+	}
+
+	public class BookMapper implements RowMapper<BookBean> {
+
+		@Override
+		public BookBean mapRow(ResultSet rs, int rowNum) throws SQLException {
+			BookBean bookBean = new BookBean();
+			bookBean.setbId(rs.getInt("bid"));
+			bookBean.setbName(rs.getString("bname"));
+			bookBean.setbPrice(rs.getInt("bprice"));
+			bookBean.setbQty(rs.getInt("bqty"));
+			return bookBean;
+		}
+
+	}
+
+	public List<BookBean> getAllBooks() {
+
+		return jdbcTemplate.query("select * from book", new BookMapper());
 	}
 
 }
