@@ -42,4 +42,16 @@ public class BookDao {
 		return jdbcTemplate.query("select * from book", new BookMapper());
 	}
 
+	public BookBean getBookById(int bId) {
+
+		return jdbcTemplate.queryForObject("select * from book where bid =?", new BookMapper(), bId);
+
+	}
+
+	public int updateBook(BookBean bean) {
+
+		return jdbcTemplate.update("update book set bname = ?,bprice=?,bqty =? where bid = ?", bean.getbName(),
+				bean.getbPrice(), bean.getbQty(), bean.getbId());
+	}
+
 }

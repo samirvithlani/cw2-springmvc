@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page isELIgnored="false" %>
+<%@ page isELIgnored="false"%>
 
 
 <!DOCTYPE html>
@@ -24,11 +24,16 @@
 			</thead>
 			<tbody>
 				<c:forEach var="books" items="${books }">
+					<c:url var="updateLink" value="/updateForm">
+						<c:param name="bId" value="${books.bId}"></c:param>
+					</c:url>
+
 					<tr>
 						<td>${books.bId }</td>
 						<td>${books.bName }</td>
 						<td>${books.bPrice }</td>
 						<td>${books.bQty }</td>
+						<td><a href="${updateLink }">UPDATE</a></td>
 					</tr>
 				</c:forEach>
 

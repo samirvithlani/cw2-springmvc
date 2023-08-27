@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bean.BookBean;
 import com.dao.BookDao;
@@ -38,12 +39,29 @@ public class BookController {
 		return "redirect:booklist";
 	}
 
+	@GetMapping("/updateForm")
+	public String updateForm(@RequestParam("bId") int bId, Model model) {
+
+		BookBean bookBean = bookDao.getBookById(bId);
+		model.addAttribute("book", bookBean);
+
+		return "updatebook";
+	}
+
 	@GetMapping("/booklist")
 	public String getBooks(Model model) {
 
-		
 		List<BookBean> books = bookDao.getAllBooks();
-		model.addAttribute("books",books);
+		model.addAttribute("books", books);
 		return "booklist";
+	}
+
+	@PostMapping("/updatebook")
+	public String updateBook(@ModelAttribute("book") BookBean bookBean) {
+
+		System.out.println(bookBean.getbId());
+		int res = bookDao.updateBook(bookBean);
+		return "redirect:booklist";
+
 	}
 }
