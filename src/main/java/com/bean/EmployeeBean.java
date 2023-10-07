@@ -1,10 +1,15 @@
 package com.bean;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
+
 public class EmployeeBean {
 
 	private int eId;
 	private String eName;
+	// @Email
 	private String eEmail;
+	// @Pattern(regexp = "[6-9] {1}[0-9] {9}")
 	private int eAge;
 	private int dId;
 	private String dName;
