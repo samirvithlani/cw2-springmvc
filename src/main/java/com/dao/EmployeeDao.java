@@ -38,6 +38,21 @@ public class EmployeeDao {
 
 	}
 
+	public EmployeeBean loginEmployee(EmployeeBean employeeBean) {
+
+		try {
+
+			return jdbcTemplate.queryForObject(
+					"select * from employee1 natural join department where eemail ='" + employeeBean.geteEmail() + "'",
+					new EmployeeMapper());
+		} catch (Exception e) {
+
+			System.out.println(e);
+			return null;
+		}
+
+	}
+
 	public List<EmployeeBean> getAllEmployees() {
 
 		return jdbcTemplate.query("select * from employee natural join department", new EmployeeMapper());
